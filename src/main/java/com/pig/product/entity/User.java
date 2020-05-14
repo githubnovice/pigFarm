@@ -81,6 +81,11 @@ public class User extends Model<User> {
     private Integer uPower;
 
     /**
+     * 登录权限
+     */
+    private Integer uOperatePower;
+
+    /**
      * token
      */
     private String uToken;
