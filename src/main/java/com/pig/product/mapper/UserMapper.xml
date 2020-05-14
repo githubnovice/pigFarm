@@ -16,7 +16,6 @@
         <result column="u_login_count" property="uLoginCount" />
         <result column="u_belong_to_pig_farm" property="uBelongToPigFarm" />
         <result column="u_power" property="uPower" />
-        <result column="u_operate_power" property="uOperatePower" />
         <result column="u_token" property="uToken" />
     </resultMap>
 
