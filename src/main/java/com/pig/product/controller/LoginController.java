@@ -3,6 +3,7 @@ package com.pig.product.controller;
 import com.pig.product.entity.User;
 import com.pig.product.service.IUserService;
 import com.pig.product.util.BaseController;
+import com.pig.product.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +49,36 @@ public class LoginController extends BaseController {
         }
     }
 
-    @PostMapping("checkToken")
-    public Object checkToken(String token){
-        iUserService.checkToken(token);
-        return null;
-    }
+    /***
+	 * 验证是否登陆
+	 *
+	 * @param username
+	 * @param token
+	 * @return
+	 */
+	@PostMapping("checkToken")
+	public Object checkToken(String username, String token) {
+		Object tokens = RedisUtil.getObject(username);
+		if (null != tokens && "" != tokens) {
+			if (tokens.equals(token)) {
+				return renderSuccess();
+			}
+		}
+		return renderError();
+	}
+
+	/***
+	 * 清除token
+	 *
+	 * @param username
+	 * @return
+	 */
+    @PostMapping("cleanToken")
+	public Object cleanToken(String username) {
+		if (RedisUtil.getObject(username) != null) {
+			RedisUtil.delkeyObject(username);
+			return renderSuccess();
+		}
+		return renderError();
+	}
 }
