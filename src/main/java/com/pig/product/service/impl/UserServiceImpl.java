@@ -76,15 +76,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         wrapper.eq("u_account",user.getUAccount());
         try {
             User obj = userMapper.selectOne(wrapper);
-            if(null == obj){
-                user.setUNumber(UniqueNumber.makeOrderNum());
-                user.setUPassword(MD5Util.getMD5(user.getUPassword()));
-                user.setULevel(2);
-                user.setUCreateTime(new Date());
-                return userMapper.insert(user);
-            }else{
+            if(null != obj)
                 return 2;
-            }
+            user.setUNumber(UniqueNumber.makeOrderNum());
+            user.setUPassword(MD5Util.getMD5(user.getUPassword()));
+            user.setULevel(2);
+            user.setUCreateTime(new Date());
+            return userMapper.insert(user);
         }catch (Exception e){
             return 500;
         }
