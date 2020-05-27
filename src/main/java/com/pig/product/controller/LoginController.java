@@ -24,15 +24,16 @@ public class LoginController extends BaseController {
      * @return
      */
     @PostMapping("userLogin")
-    public Object userLogin(User user){
+    public Object userLogin(User user) {
         User obj = iUserService.userLogin(user);
-        if(null != obj && 2 == obj.getUStatus()){
+        if (null == obj)
+            return renderError("账户或密码错误");
+        if (2 == obj.getUStatus())
             return renderError("账号暂未激活，请联系管理员");
-        }else if(null != obj && 0 == obj.getUStatus()){
+        if (0 == obj.getUStatus())
             return renderError("账号已被禁用，请联系管理员");
-        }else{
-            return null != obj ? renderSuccess(obj) : renderError("账户或密码错误");
-        }
+        return renderSuccess(obj);
+
     }
 
     /***
@@ -40,47 +41,45 @@ public class LoginController extends BaseController {
      * @return
      */
     @PostMapping("useRegister")
-    public Object useRegister(User user){
+    public Object useRegister(User user) {
         int bool = iUserService.useRegister(user);
-        if(2 == bool){
+        if (2 == bool)
             return renderError("该账户已存在");
-        }else if(500 == bool){
+        if (500 == bool)
             return renderError("系统异常");
-        }else{
-            return 1 == bool ? renderSuccess("注册成功，审核中") : renderError("注册失败");
-        }
+        return 1 == bool ? renderSuccess("注册成功，审核中") : renderError("注册失败");
     }
 
     /***
-	 * 验证是否登陆
-	 *
-	 * @param username
-	 * @param token
-	 * @return
-	 */
-	@PostMapping("checkToken")
-	public Object checkToken(String username, String token) {
-		Object tokens = RedisUtil.getObject(username);
-		if (null != tokens && "" != tokens) {
-			if (tokens.equals(token)) {
-				return renderSuccess();
-			}
-		}
-		return renderError();
-	}
+     * 验证是否登陆
+     *
+     * @param username
+     * @param token
+     * @return
+     */
+    @PostMapping("checkToken")
+    public Object checkToken(String username, String token) {
+        Object tokens = RedisUtil.getObject(username);
+        if (null != tokens && "" != tokens) {
+            if (tokens.equals(token)) {
+                return renderSuccess();
+            }
+        }
+        return renderError();
+    }
 
-	/***
-	 * 清除token
-	 *
-	 * @param username
-	 * @return
-	 */
+    /***
+     * 清除token
+     *
+     * @param username
+     * @return
+     */
     @PostMapping("cleanToken")
-	public Object cleanToken(String username) {
-		if (RedisUtil.getObject(username) != null) {
-			RedisUtil.delkeyObject(username);
-			return renderSuccess();
-		}
-		return renderError();
-	}
+    public Object cleanToken(String username) {
+        if (RedisUtil.getObject(username) != null) {
+            RedisUtil.delkeyObject(username);
+            return renderSuccess();
+        }
+        return renderError();
+    }
 }
