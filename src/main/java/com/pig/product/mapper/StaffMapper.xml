@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pig.product.mapper.StaffMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pig.product.entity.Staff">
+        <id column="s_id" property="sId" />
+        <result column="s_name" property="sName" />
+        <result column="s_age" property="sAge" />
+        <result column="s_id_number" property="sIdNumber" />
+        <result column="s_entry_time" property="sEntryTime" />
+        <result column="s_state" property="sState" />
+        <result column="s_hide_age" property="sHideAge" />
+        <result column="s_hide_id_number" property="sHideIdNumber" />
+        <result column="p_id" property="pId" />
+    </resultMap>
+
+</mapper>

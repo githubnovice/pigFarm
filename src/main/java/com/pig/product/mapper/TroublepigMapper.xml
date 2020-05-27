@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pig.product.mapper.TroublepigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pig.product.entity.Troublepig">
+        <id column="t_id" property="tId" />
+        <result column="p_number" property="pNumber" />
+        <result column="t_find_time" property="tFindTime" />
+        <result column="t_trouble_total" property="tTroubleTotal" />
+        <result column="t_handle" property="tHandle" />
+        <result column="t_state" property="tState" />
+        <result column="t_reason" property="tReason" />
+        <result column="u_number" property="uNumber" />
+        <result column="t_pigsty_no" property="tPigstyNo" />
+        <result column="p_id" property="pId" />
+    </resultMap>
+
+</mapper>

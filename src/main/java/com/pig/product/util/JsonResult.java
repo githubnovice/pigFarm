@@ -5,25 +5,16 @@ package com.pig.product.util;
  * Describe: 封装Json返回信息
  */
 public class JsonResult {
-	private boolean success;
-	private String status;
+	private String code;
 	private String msg;
-	private Object obj;
+	private Object data;
 
-	public boolean isSuccess() {
-		return success;
+	public String getCode() {
+		return code;
 	}
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getMsg() {
@@ -34,11 +25,11 @@ public class JsonResult {
 		this.msg = msg;
 	}
 
-	public Object getObj() {
-		return obj;
+	public Object getData() {
+		return data;
 	}
 
-	public void setObj(Object obj) {
-		this.obj = obj;
+	public void setData(Object data) {
+		this.data = data;
 	}
 }

@@ -4,18 +4,18 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * <p>
- * 
+ * 用户表
  * </p>
  *
  * @author ST
- * @since 2020-05-06
+ * @since 2020-05-25
  */
 @Data
 public class User extends Model<User> {
@@ -31,9 +31,14 @@ public class User extends Model<User> {
     private String uNumber;
 
     /**
-     * 上级领导唯一编号
+     * 上级领导编号
      */
     private String uSuperiorLeaderNumber;
+
+    /**
+     * 真实姓名
+     */
+    private String uName;
 
     /**
      * 账户
@@ -51,7 +56,7 @@ public class User extends Model<User> {
     private Integer uLevel;
 
     /**
-     * 状态 (1可用，0禁用) 
+     * 状态 (2未激活，1可用，0禁用) 
      */
     private Integer uStatus;
 
@@ -73,15 +78,12 @@ public class User extends Model<User> {
     /**
      * 属于哪个猪场
      */
-    private Integer uBelongToPigFarm;
+    private Integer pId;
 
     /**
      * 登录权限
      */
     private Integer uPower;
 
-    /**
-     * token
-     */
     private String uToken;
 }

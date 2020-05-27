@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pig.product.mapper.PigletMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pig.product.entity.Piglet">
+        <id column="p_id" property="pId" />
+        <result column="p_number" property="pNumber" />
+        <result column="p_total" property="pTotal" />
+        <result column="p_death_total" property="pDeathTotal" />
+        <result column="p_problem_total" property="pProblemTotal" />
+        <result column="p_instorage_time" property="pInstorageTime" />
+        <result column="p_outbound_time" property="pOutboundTime" />
+        <result column="p_state" property="pState" />
+        <result column="p_ids" property="pIds" />
+    </resultMap>
+
+</mapper>

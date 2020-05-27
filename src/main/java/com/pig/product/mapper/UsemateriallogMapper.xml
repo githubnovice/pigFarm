@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pig.product.mapper.UsemateriallogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pig.product.entity.Usemateriallog">
+        <id column="id" property="id" />
+        <result column="m_number" property="mNumber" />
+        <result column="m_use_time" property="mUseTime" />
+        <result column="m_purpose" property="mPurpose" />
+        <result column="u_number" property="uNumber" />
+        <result column="m_remarks" property="mRemarks" />
+        <result column="m_usage" property="mUsage" />
+        <result column="m_sid" property="mSid" />
+        <result column="p_id" property="pId" />
+    </resultMap>
+
+</mapper>

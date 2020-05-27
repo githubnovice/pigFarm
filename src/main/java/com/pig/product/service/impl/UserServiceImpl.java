@@ -12,7 +12,9 @@ import com.pig.product.util.UniqueNumber;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -95,5 +97,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public void checkToken(String token) {
 
+    }
+
+    /***
+     * 查询所有用户
+     * @return
+     */
+    @Override
+    public List getUserList() {
+        List list = userMapper.selectList(null);
+        return list;
     }
 }

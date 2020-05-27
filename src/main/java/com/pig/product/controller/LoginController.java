@@ -7,7 +7,9 @@ import com.pig.product.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
+/***
+ * 用户登录
+ */
 @RestController
 @RequestMapping("/login/")
 @CrossOrigin

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pig.product.mapper.ReferenceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pig.product.entity.Reference">
+        <id column="r_id" property="rId" />
+        <result column="u_number" property="uNumber" />
+        <result column="r_phone" property="rPhone" />
+        <result column="r_source" property="rSource" />
+        <result column="r_remarks" property="rRemarks" />
+        <result column="r_state" property="rState" />
+    </resultMap>
+
+</mapper>

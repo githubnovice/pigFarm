@@ -3,6 +3,8 @@ package com.pig.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pig.product.entity.User;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -18,4 +20,6 @@ public interface IUserService extends IService<User> {
     int useRegister(User user);
 
     void checkToken(String token);
+
+    List getUserList();
 }

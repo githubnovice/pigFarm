@@ -13,8 +13,7 @@ public class BaseController {
 	 */
 	protected JsonResult renderError() {
 		JsonResult result = new JsonResult();
-		result.setSuccess(false);
-		result.setStatus("500");
+		result.setCode("1");
 		return result;
 	}
 
@@ -38,8 +37,7 @@ public class BaseController {
 	 */
 	protected JsonResult renderSuccess() {
 		JsonResult result = new JsonResult();
-		result.setSuccess(true);
-		result.setStatus("200");
+		result.setCode("0");
 		return result;
 	}
 
@@ -59,14 +57,14 @@ public class BaseController {
 	/**
 	 * 渲染成功数据（带数据）
 	 *
-	 * @param obj
+	 * @param data
 	 *            需要返回的对象
 	 * @return result
 	 */
 
-	protected JsonResult renderSuccess(Object obj) {
+	protected JsonResult renderSuccess(Object data) {
 		JsonResult result = renderSuccess();
-		result.setObj(obj);
+		result.setData(data);
 		return result;
 	}
 }
