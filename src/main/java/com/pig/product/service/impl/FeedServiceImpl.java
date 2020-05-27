@@ -29,17 +29,18 @@ public class FeedServiceImpl extends ServiceImpl<FeedMapper, Feed> implements IF
 
     /**
      * 饲料入库修改
+     *
      * @param feed
      * @return
      */
     @Override
     public int insertOrModifyFeed(Feed feed) {
-        if(null == feed.getFId()){
+        if (null == feed.getFId()) {
             feed.setFTime(new Date());
             feed.setFSurplusNumber(feed.getFTotal());
             int bool = feedMapper.insert(feed);
             return bool;
-        }else{
+        } else {
             int bool = feedMapper.updateById(feed);
             return bool;
         }
@@ -47,6 +48,7 @@ public class FeedServiceImpl extends ServiceImpl<FeedMapper, Feed> implements IF
 
     /**
      * 本场饲料 带分页
+     *
      * @param curren
      * @param size
      * @param pid
@@ -55,26 +57,26 @@ public class FeedServiceImpl extends ServiceImpl<FeedMapper, Feed> implements IF
      */
     @Override
     public Page getFeedByList(Integer curren, Integer size, Integer pid, String fName) {
-        if(null == curren){
+        if (null == curren) {
             curren = 1;
         }
-        if(null == size){
+        if (null == size) {
             size = 10;
         }
-        Page page = new Page(curren,size);
+        Page page = new Page(curren, size);
         QueryWrapper queryWrapper = new QueryWrapper();
-        if(0 == pid){
-            if(null != fName){
-                queryWrapper.like("f_name",fName);
+        if (0 == pid) {
+            if (null != fName) {
+                queryWrapper.like("f_name", fName);
             }
-            Page mapIPage = feedMapper.selectPage(page,queryWrapper);
+            Page mapIPage = feedMapper.selectPage(page, queryWrapper);
             return mapIPage;
-        }else{
-            queryWrapper.eq("p_id",pid);
-            if(null != fName){
-                queryWrapper.like("f_name",fName);
+        } else {
+            queryWrapper.eq("p_id", pid);
+            if (null != fName) {
+                queryWrapper.like("f_name", fName);
             }
-            Page mapIPage = feedMapper.selectPage(page,queryWrapper);
+            Page mapIPage = feedMapper.selectPage(page, queryWrapper);
             return mapIPage;
         }
     }
@@ -87,8 +89,8 @@ public class FeedServiceImpl extends ServiceImpl<FeedMapper, Feed> implements IF
     @Override
     public List getFeedByPid(Integer pid) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("p_id",pid);
-        queryWrapper.eq("f_return",0);
+        queryWrapper.eq("p_id", pid);
+        queryWrapper.eq("f_return", 0);
         return feedMapper.selectList(queryWrapper);
     }
 
@@ -99,7 +101,7 @@ public class FeedServiceImpl extends ServiceImpl<FeedMapper, Feed> implements IF
      */
     @Override
     public Feed useFeedRecord(Long fUseFid) {
-        return  feedMapper.selectById(fUseFid);
+        return feedMapper.selectById(fUseFid);
     }
 
     /***
@@ -111,18 +113,15 @@ public class FeedServiceImpl extends ServiceImpl<FeedMapper, Feed> implements IF
     @Override
     public int modifyFeedById(Integer state, Long fUseFid, Integer result) {
         Feed feed = feedMapper.selectById(fUseFid);
-        if(1 == state){
-            if(feed.getFSurplusNumber() - result > 0){
-                feed.setFUseTotal(feed.getFUseTotal() + result);
-                feed.setFSurplusNumber(feed.getFSurplusNumber() - result);
-                return feedMapper.updateById(feed);
-            }else{
-                return 0;
-            }
-        }else{
+        if (1 != state) {
             feed.setFUseTotal(feed.getFUseTotal() - result);
             feed.setFSurplusNumber(feed.getFSurplusNumber() + result);
             return feedMapper.updateById(feed);
         }
+        if (feed.getFSurplusNumber() - result <= 0)
+            return 0;
+        feed.setFUseTotal(feed.getFUseTotal() + result);
+        feed.setFSurplusNumber(feed.getFSurplusNumber() - result);
+        return feedMapper.updateById(feed);
     }
 }
