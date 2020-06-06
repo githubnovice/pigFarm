@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -32,12 +31,12 @@ public class Troublepig extends Model<Troublepig> {
     /**
      * 发现时间
      */
-    private LocalDateTime tFindTime;
+    private Date tFindTime;
 
     /**
      * 异常数量
      */
-    private String tTroubleTotal;
+    private Integer tTroubleTotal;
 
     /**
      * 如何处理

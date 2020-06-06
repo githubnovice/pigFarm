@@ -3,7 +3,6 @@ package com.pig.product.controller;
 import com.pig.product.entity.Staff;
 import com.pig.product.service.IStaffService;
 import com.pig.product.util.BaseController;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +44,17 @@ public class StaffController extends BaseController {
 
     public Object deleteStaffByListId(Integer []sid){
         return null;
+    }
+
+    /***
+     * 查询本场员工总数
+     * @param pid
+     * @param ulevel
+     * @return
+     */
+    @PostMapping("getStaffCount")
+    public Object getStaffCount(Integer pid,Integer ulevel){
+        int count = iStaffService.getStaffCount(pid,ulevel);
+        return renderSuccess(count);
     }
 }

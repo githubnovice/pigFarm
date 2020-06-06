@@ -15,4 +15,32 @@
         <result column="p_id" property="pId" />
     </resultMap>
 
+    <select id="getUseMaterialByList" resultType="java.util.Map" parameterType="java.lang.String">
+        SELECT
+            usemateriallog.id,
+            usemateriallog.m_number,
+            usemateriallog.m_use_time,
+            usemateriallog.m_purpose,
+            usemateriallog.u_number,
+            usemateriallog.m_remarks,
+            usemateriallog.m_usage,
+            material.m_number,
+            material.m_name,
+            staff.s_name
+        FROM
+            usemateriallog ,
+            material,
+            staff
+        WHERE
+            usemateriallog.m_sid = staff.s_id
+        AND
+            usemateriallog.m_number = material.m_number
+        AND
+            usemateriallog.p_id = #{pid}
+        <!-- 查询重点文章 -->
+        <if test="purpose != null and purpose != ''">
+            AND usemateriallog.m_purpose like #{purpose}
+        </if>
+    </select>
+
 </mapper>

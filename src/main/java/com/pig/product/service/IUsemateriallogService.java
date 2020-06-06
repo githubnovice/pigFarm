@@ -1,5 +1,6 @@
 package com.pig.product.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig.product.entity.Usemateriallog;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUsemateriallogService extends IService<Usemateriallog> {
 
+    int addOrModifyUseMaterial(Usemateriallog usemateriallog);
+
+    Page getUseMaterialByList(Integer curren, Integer size, Integer pid, String purpose);
+
+    Usemateriallog getUseMaterialById(Long id);
 }

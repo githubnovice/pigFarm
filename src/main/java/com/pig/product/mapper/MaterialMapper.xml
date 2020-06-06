@@ -13,7 +13,6 @@
         <result column="m_total" property="mTotal" />
         <result column="m_add_time" property="mAddTime" />
         <result column="m_usage" property="mUsage" />
-        <result column="m_surplus" property="mSurplus" />
         <result column="m_remarks" property="mRemarks" />
         <result column="p_id" property="pId" />
     </resultMap>

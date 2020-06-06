@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -58,17 +57,12 @@ public class Material extends Model<Material> {
     /**
      * 添加时间
      */
-    private LocalDateTime mAddTime;
+    private Date mAddTime;
 
     /**
      * 材料使用量
      */
     private Integer mUsage;
-
-    /**
-     * 材料剩余量
-     */
-    private Integer mSurplus;
 
     /**
      * 备注

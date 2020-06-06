@@ -20,6 +20,7 @@ import java.util.List;
  * @since 2020-05-23
  */
 @Service
+@SuppressWarnings("unchecked")
 public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements IStaffService {
 
     @Resource
@@ -52,5 +53,21 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         }else{
             return staffMapper.updateById(staff);
         }
+    }
+
+    /***
+     * 根据登录级别查询员工总数
+     * @param pid
+     * @param ulevel
+     * @return
+     */
+    @Override
+    public int getStaffCount(Integer pid, Integer ulevel) {
+        if(1 == ulevel){
+            return staffMapper.selectCount(null);
+        }
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("p_id",pid);
+        return staffMapper.selectCount(queryWrapper);
     }
 }

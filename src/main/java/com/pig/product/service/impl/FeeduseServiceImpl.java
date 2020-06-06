@@ -52,6 +52,9 @@ public class FeeduseServiceImpl extends ServiceImpl<FeeduseMapper, Feeduse> impl
             size = 10;
         }
         Page page = new Page(curren,size);
+        if(null != uname){
+            uname = "%"+uname+"%";
+        }
         page.setRecords(feeduseMapper.getUseFeedRecord(page,pid,uname));
         return page;
     }

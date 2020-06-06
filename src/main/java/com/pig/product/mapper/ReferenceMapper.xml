@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.pig.product.entity.Reference">
         <id column="r_id" property="rId" />
         <result column="u_number" property="uNumber" />
+        <result column="r_name" property="rName" />
         <result column="r_phone" property="rPhone" />
         <result column="r_source" property="rSource" />
         <result column="r_remarks" property="rRemarks" />

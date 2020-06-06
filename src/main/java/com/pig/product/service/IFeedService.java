@@ -24,5 +24,5 @@ public interface IFeedService extends IService<Feed> {
 
     Feed useFeedRecord(Long fUseFid);
 
-    int modifyFeedById(Integer state,Long fUseFid, Integer result);
+    int modifyFeedById(Integer state, Long fUseFid, Integer result);
 }

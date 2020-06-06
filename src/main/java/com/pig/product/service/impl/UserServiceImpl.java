@@ -1,6 +1,7 @@
 package com.pig.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pig.product.entity.User;
 import com.pig.product.mapper.UserMapper;
@@ -80,7 +81,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 return 2;
             user.setUNumber(UniqueNumber.makeOrderNum());
             user.setUPassword(MD5Util.getMD5(user.getUPassword()));
-            user.setULevel(2);
             user.setUCreateTime(new Date());
             return userMapper.insert(user);
         }catch (Exception e){
@@ -102,8 +102,70 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return
      */
     @Override
-    public List getUserList() {
-        List list = userMapper.selectList(null);
+    public List getUserList(Integer pid) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if(null != pid){
+            queryWrapper.eq("p_id",pid);
+        }
+        List list = userMapper.selectList(queryWrapper);
         return list;
+    }
+
+    /***
+     * 添加Or修改管理员
+     * @param user
+     * @return
+     */
+    @Override
+    public int addOrModifyUserByPid(User user) {
+        if(null == user.getUId()){
+            user.setUPassword(MD5Util.getMD5(user.getUPassword()));
+            user.setUNumber(UniqueNumber.makeOrderNum());
+            user.setUCreateTime(new Date());
+            userMapper.insert(user);
+        }
+        if(null != user.getUPassword()){
+            user.setUPassword(MD5Util.getMD5(user.getUPassword()));
+        }
+        return userMapper.updateById(user);
+    }
+
+    /***
+     * 注册时查询该手机号是否被注册
+     * @param uAccount
+     * @return
+     */
+    @Override
+    public User getUserByuAccount(String uAccount) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("u_account",uAccount);
+        return userMapper.selectOne(queryWrapper);
+    }
+
+    /***
+     * 查询管理员
+     * @param ustatus
+     * @return
+     */
+    @Override
+    public Page getAdminUser(Integer page,Integer limit,Integer ustatus) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("u_status",ustatus);
+        Page page1 = new Page(page,limit);
+        return  userMapper.selectPage(page1,queryWrapper);
+    }
+
+    /***
+     * 审核管理员
+     * @param uid
+     * @param uStatus
+     * @return
+     */
+    @Override
+    public int toExamineAdmin(Long uid, Integer uStatus) {
+        User user = new User();
+        user.setUId(uid);
+        user.setUStatus(uStatus);
+        return userMapper.updateById(user);
     }
 }

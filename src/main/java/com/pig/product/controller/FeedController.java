@@ -1,6 +1,5 @@
 package com.pig.product.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig.product.entity.Feed;
 import com.pig.product.entity.Feeduse;
@@ -39,16 +38,16 @@ public class FeedController extends BaseController {
 
     /***
      * 查询本场入库饲料
-     * @param curren 页数
-     * @param size   每页几条
+     * @param page 页数
+     * @param limit   每页几条
      * @param pid    猪场ID
      * @param fName  饲料名称
      * @return
      */
     @GetMapping("getFeedByList")
-    public Object getFeedByList(Integer curren,Integer size,Integer pid,String fName){
-        Page list = iFeedService.getFeedByList(curren,size,pid,fName);
-        return list.getTotal() > 0 ? renderSuccess(list.getRecords()) : renderError("暂无数据");
+    public Object getFeedByList(Integer page,Integer limit,Integer pid,String fName){
+        Page list = iFeedService.getFeedByList(page,limit,pid,fName);
+        return list.getTotal() > 0 ? renderSuccess(list.getTotal(),list.getRecords()) : renderError("暂无数据");
     }
 
     /***
@@ -69,64 +68,55 @@ public class FeedController extends BaseController {
      */
     @PostMapping("useFeedRecord")
     @Transactional
-    public Object useFeedRecord(Feeduse feeduse){
-        if(null == feeduse.getId()){
+    public Object useFeedRecord(Feeduse feeduse) {
+        Long id = feeduse.getId();
+        if (null == id) {
             //添加使用记录
             Feed feed = iFeedService.useFeedRecord(feeduse.getFUseFid());
-            if(feed.getFSurplusNumber() >= feeduse.getFUserNumber()){
-                int bool = iFeeduseService.useFeedRecord(feeduse);
-                if(bool == 1){
-                    Feed fobj = new Feed();
-                    fobj.setFId(feed.getFId());
-                    fobj.setFUseTotal(feed.getFUseTotal()+feeduse.getFUserNumber());
-                    fobj.setFSurplusNumber(feed.getFSurplusNumber()-feeduse.getFUserNumber());
-                    int sta = iFeedService.insertOrModifyFeed(fobj);
-                    return sta == 1 ? renderSuccess("记录成功") : renderError("记录失败");
-                }else{
-                    return renderError("记录失败");
-                }
-            }
-            return renderError("该饲料总数不够本次使用");
-        }else{
+            Integer surplusNumber = feed.getFSurplusNumber();
+            Integer userNumber = feeduse.getFUserNumber();
+            if (surplusNumber < userNumber)
+                return renderError("该饲料总数不够本次使用");
+            int bool = iFeeduseService.useFeedRecord(feeduse);
+            if (bool != 1)
+                return renderError("记录失败");
+            Feed fobj = new Feed();
+            fobj.setFId(feed.getFId());
+            fobj.setFUseTotal(feed.getFUseTotal() + userNumber);
+            fobj.setFSurplusNumber(surplusNumber - userNumber);
+            int sta = iFeedService.insertOrModifyFeed(fobj);
+            return sta == 1 ? renderSuccess("记录成功") : renderError("记录失败");
+        } else {
             //修改使用记录
-            Feeduse use = iFeeduseService.getFeeduseById(feeduse.getId());
-            if(null != use){
-                Integer result = 0;
-                int bool;
-                if(use.getFUserNumber() < feeduse.getFUserNumber()){
-                    //代表是要在原来基础上增加
-                    Integer state = 1;
-                    //要添加的数量
-                    result = feeduse.getFUserNumber() - use.getFUserNumber();
-                    bool = iFeedService.modifyFeedById(state,feeduse.getFUseFid(),result);
-                }else{
-                    Integer state = 0;
-                    result = use.getFUserNumber() - feeduse.getFUserNumber();
-                    bool = iFeedService.modifyFeedById(state,feeduse.getFUseFid(),result);
-                }
-                if(1 == bool){
-                    int sta = iFeeduseService.modifyFeedUseById(feeduse);
-                    return sta == 1 ? renderSuccess("修改成功") : renderError("修改失败");
-                }else{
-                    return renderSuccess("修改失败");
-                }
-            }else{
+            Feeduse use = iFeeduseService.getFeeduseById(id);
+            if (null == use)
                 return renderError("该记录不存在");
-            }
+            //使用过的饲料数量
+            Integer userNumber = use.getFUserNumber();
+            //要修改的使用饲料总数
+            Integer fuserNumber = feeduse.getFUserNumber();
+            boolean flag = userNumber <= fuserNumber;
+            Integer state = flag ? 1 : 0;
+            Integer result = flag ? fuserNumber - userNumber : userNumber - fuserNumber;
+            int bool = iFeedService.modifyFeedById(state, feeduse.getFUseFid(), result);
+            if (1 != bool)
+                return renderSuccess("修改失败");
+            int sta = iFeeduseService.modifyFeedUseById(feeduse);
+            return sta == 1 ? renderSuccess("修改成功") : renderError("修改失败");
         }
     }
 
     /***
      * 查询饲料饲料带分页
-     * @param curren
-     * @param size
+     * @param page
+     * @param limit
      * @param pid
      * @param uname
      * @return
      */
     @GetMapping("getUseFeedRecord")
-    public Object getUseFeedRecord(Integer curren,Integer size,Integer pid,String uname){
-        IPage page = iFeeduseService.getUseFeedRecord(curren,size,pid,uname);
-        return page.getTotal() > 0 ? renderSuccess(page.getRecords()) : renderError("暂无数据");
+    public Object getUseFeedRecord(Integer page,Integer limit,Integer pid,String uname){
+        Page pages = iFeeduseService.getUseFeedRecord(page,limit,pid,uname);
+        return pages.getTotal() > 0 ? renderSuccess(pages.getTotal(),pages.getRecords()) : renderError("暂无数据");
     }
 }

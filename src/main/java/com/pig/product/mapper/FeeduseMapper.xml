@@ -36,9 +36,9 @@
             feeduse.f_use_fid = feed.f_id
         AND
             feeduse.p_id = #{pid}
-        <!-- 查询重点文章 -->
+        <!-- 模糊查询 -->
         <if test="uname != null and uname != ''">
-            AND staff.s_name = #{uname}
+            AND feed.f_name like #{uname}
         </if>
     </select>
 </mapper>

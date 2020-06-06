@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -32,7 +33,7 @@ public class Usemateriallog extends Model<Usemateriallog> {
     /**
      * 使用时间(年月日)
      */
-    private LocalDateTime mUseTime;
+    private Date mUseTime;
 
     /**
      * 用途

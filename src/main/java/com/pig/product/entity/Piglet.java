@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -47,12 +46,12 @@ public class Piglet extends Model<Piglet> {
     /**
      * 进库时间
      */
-    private LocalDateTime pInstorageTime;
+    private Date pInstorageTime;
 
     /**
      * 出栏时间
      */
-    private LocalDateTime pOutboundTime;
+    private Date pOutboundTime;
 
     /**
      * 是否出库（0未出库，1出库）

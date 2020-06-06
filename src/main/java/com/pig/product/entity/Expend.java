@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -38,7 +37,7 @@ public class Expend extends Model<Expend> {
     /**
      * 支出时间(年月日)
      */
-    private LocalDateTime eTime;
+    private Date eTime;
 
     /**
      * 付钱的人ID

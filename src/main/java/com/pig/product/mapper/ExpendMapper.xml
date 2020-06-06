@@ -13,4 +13,37 @@
         <result column="p_id" property="pId" />
     </resultMap>
 
+    <select id="getExpendByList" resultType="java.util.Map" parameterType="java.lang.String">
+        SELECT
+            expend.e_id,
+            expend.e_purpose,
+            expend.e_money,
+            expend.e_time,
+            staff.s_name
+        FROM
+            expend ,
+            staff
+        WHERE
+            expend.s_id = staff.s_id
+        AND
+            expend.p_id = #{pid}
+        <!-- 用途查询 -->
+        <if test="ePurpose != null and ePurpose != ''">
+            AND expend.e_purpose like #{ePurpose}
+        </if>
+    </select>
+
+
+    <select id="getExpendPayCount" resultType="java.lang.String" >
+        SELECT
+--             concat(sum(e_money),"eMoney")
+                sum(e_money) eMoney
+        FROM
+            expend
+        WHERE
+            e_time BETWEEN  #{toLocaleString} AND #{toLocaleString1}
+            AND p_id = #{pid}
+
+    </select>
+
 </mapper>

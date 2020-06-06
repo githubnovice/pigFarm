@@ -29,6 +29,11 @@ public class Reference extends Model<Reference> {
     private String uNumber;
 
     /**
+     * 材料名字
+     */
+    private String rName;
+
+    /**
      * 联系电话
      */
     private String rPhone;

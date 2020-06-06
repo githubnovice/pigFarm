@@ -1,7 +1,10 @@
 package com.pig.product.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pig.product.entity.Material;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMaterialService extends IService<Material> {
 
+    int addOrModifyMaterial(Material material);
+
+    Page getMaterialList(Integer curren, Integer size, Integer pid, String mname);
+
+    List getUnfinishedMaterialList(Integer pid);
+
+    Material getMaterialBymNumber(String mNumber);
 }

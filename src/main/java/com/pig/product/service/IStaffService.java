@@ -18,4 +18,6 @@ public interface IStaffService extends IService<Staff> {
     List getStaffByList(Integer pid, Integer sstate);
 
     int addOrModifyStaff(Staff staff);
+
+    int getStaffCount(Integer pid, Integer ulevel);
 }

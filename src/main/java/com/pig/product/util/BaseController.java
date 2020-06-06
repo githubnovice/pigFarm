@@ -67,4 +67,19 @@ public class BaseController {
 		result.setData(data);
 		return result;
 	}
+
+	/**
+	 * 渲染成功数据（带数据）
+	 *
+	 * @param count
+	 *            需要返回的对象
+	 * @return result
+	 */
+
+	protected JsonResult renderSuccess(Long count,Object data) {
+		JsonResult result = renderSuccess();
+		result.setCount(count);
+		result.setData(data);
+		return result;
+	}
 }

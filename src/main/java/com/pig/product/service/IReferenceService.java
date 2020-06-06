@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IReferenceService extends IService<Reference> {
 
+    int addOrModifyReference(Reference reference);
 }
